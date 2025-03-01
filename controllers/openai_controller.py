@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Blueprint
+from flask import Flask, request, jsonify, Blueprint, render_template
 from services.openai_service import OpenAIService
 
 openai_bp = Blueprint("openai", __name__)
@@ -17,3 +17,7 @@ def query():
         return jsonify({"response": response_text})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@openai_bp.route("/page", methods=["GET"])
+def page():
+    return render_template("openai_page.html")
