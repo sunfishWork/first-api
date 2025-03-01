@@ -5,51 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpenAI Query</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script>
-        async function sendQuery() {
-            const prompt = document.getElementById("prompt").value;
-            const responseBox = document.getElementById("response");
-
-            if (!prompt.trim()) {
-                responseBox.innerText = "프롬프트를 입력하세요.";
-                return;
-            }
-
-            responseBox.innerText = "응답을 기다리는 중...";
-
-            try {
-                const response = await fetch("/openai/query", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ prompt })
-                });
-
-                const data = await response.json();
-                responseBox.innerText = data.response || "오류 발생: " + data.error;
-            } catch (error) {
-                responseBox.innerText = "네트워크 오류 발생";
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const textarea = document.getElementById("prompt");
-            const sendButton = document.getElementById("sendButton");
-
-            textarea.addEventListener("keydown", (event) => {
-                if (event.key === "Enter" && !event.shiftKey) {
-                    event.preventDefault();
-                    sendButton.click();
-                }
-            });
-        });
-    </script>
+    <script src="{{ url_for('static', filename='openai_script.js') }}" defer></script>
 </head>
 <body>
     <h1>OpenAI API 테스트</h1>
-    <label for="prompt"></label><textarea id="prompt" placeholder="프롬프트 입력 (Shift + Enter로 줄바꿈 가능)"></textarea>
+    <label for="prompt"></label>
+    <textarea id="prompt" placeholder="프롬프트 입력 (Shift + Enter로 줄바꿈 가능)"></textarea>
+
     <div class="button-container">
-        <button id="sendButton" onclick="sendQuery()">전송</button>
+        <button id="sendButton">전송</button>
     </div>
+
+    <h2>응답 결과</h2>
     <p id="response"></p>
+
+    <h2>생성된 소설</h2>
+    <p id="story"></p>
 </body>
 </html>

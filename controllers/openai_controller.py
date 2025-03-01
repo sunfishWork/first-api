@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, Blueprint, render_template
+from flask import request, jsonify, Blueprint, render_template
 from services.openai_service import OpenAIService
 
 openai_bp = Blueprint("openai", __name__)
@@ -15,6 +15,20 @@ def query():
         prompt = data["prompt"]
         response_text = openai_service.generate_response(prompt)
         return jsonify({"response": response_text})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@openai_bp.route("/generate_story", methods=["POST"])
+def generate_story():
+    try:
+        data = request.get_json()
+        if not data or "prompt" not in data:
+            return jsonify({"error": "Prompt is required"}), 400
+
+        prompt = data["prompt"]
+        story_text = openai_service.generate_story(prompt)
+        return jsonify({"story": story_text})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
