@@ -10,6 +10,7 @@ class OpenAIController:
     def _register_routes(self):
         self.blueprint.add_url_rule("/query", methods=["POST"], view_func=self.query)
         self.blueprint.add_url_rule("/generate_story", methods=["POST"], view_func=self.generate_story)
+        self.blueprint.add_url_rule("/translate", methods=["POST"], view_func=self.translate)
         self.blueprint.add_url_rule("/page", methods=["GET"], view_func=self.page)
 
     def query(self):
@@ -33,6 +34,19 @@ class OpenAIController:
             prompt = data["prompt"]
             story_text = self.openai_service.generate_story(prompt)
             return jsonify({"story": story_text})
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+    def translate(self):
+        try:
+            data = request.get_json()
+            if not data or "text" not in data or "target_language" not in data:
+                return jsonify({"error": "Text and target_language are required"}), 400
+
+            text = data["text"]
+            target_language = data["target_language"]
+            translated_text = self.openai_service.translate_text(text, target_language)
+            return jsonify({"translated_text": translated_text})
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 

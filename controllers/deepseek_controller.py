@@ -9,6 +9,7 @@ class DeepSeekController:
 
     def _register_routes(self):
         self.blueprint.add_url_rule("/query", methods=["POST"], view_func=self.query)
+        self.blueprint.add_url_rule("/page", methods=["GET"], view_func=self.page)
 
     def query(self):
         try:
@@ -21,3 +22,7 @@ class DeepSeekController:
             return jsonify({"response": response_text})
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+
+    @staticmethod
+    def page():
+        return render_template("deepseek_page.html")
