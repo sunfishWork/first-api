@@ -34,3 +34,11 @@ button {
     max-width: 80%;
     word-wrap: break-word;
 }
+
+#story {
+    margin-top: 20px;
+    font-size: 18px;
+    white-space: pre-wrap;
+    max-width: 80%;
+    word-wrap: break-word;
+}
