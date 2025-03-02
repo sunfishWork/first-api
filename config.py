@@ -9,6 +9,9 @@ class Config:
     OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
     STORY_GEN_SYSTEM_PROMPT = "You are a creative novelist. Based on the user’s input, create a captivating story within 400 characters."
 
+    DEEPSEEK_URL = "http://localhost:11434/api/generate"
+    DEEPSEEK_MODEL = "deepseek-r1:7b"
+
     @classmethod
     def validate(cls):
         if not cls.OPENAI_API_KEY:

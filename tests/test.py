@@ -1,6 +1,6 @@
 import requests
 
-url = "http://127.0.0.1:5000/openai/query"
+url = "http://127.0.0.1:5000/deepseek/query"
 headers = {"Content-Type": "application/json"}
 data = {"prompt": "오늘은 너에게 어떤 하루지?"}
 
